@@ -5,13 +5,12 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -20,31 +19,31 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Install dependencies 📦
-      #Using npm ci is generally faster than running npm install
-      run: |
-        cd my-app
-        npm ci
-    - name: Build the app 🏗
-      run: |
-        cd my-app
-        npm run build
-    - name: Run component tests 🔸
-      run: |
-        cd my-app
-        npm run test
-    - name: Start the app 📤
-      run: |
-        cd my-app
-        npm start &
-        npx wait-on --timeout 60000
-    - name: Run visual tests 👁
-      run: |
-        cd my-app
-        npm run test:visual
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Install dependencies 📦
+        #Using npm ci is generally faster than running npm install
+        run: |
+          cd react-testing
+          npm install
+      - name: Build the app 🏗
+        run: |
+          cd react-testing
+          npm run build
+      - name: Run component tests 🔸
+        run: |
+          cd react-testing
+          npm run test
+      - name: Start the app 📤
+        run: |
+          cd react-testing
+          npm start &
+          npx wait-on --timeout 60000
+      - name: Run visual tests 👁
+        run: |
+          cd react-testing
+          npm run test:visual
